@@ -1,6 +1,5 @@
 package com.suspiciousguys.tickets_system.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +15,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "evento")
-public class Evento {
+public class EventoModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -40,6 +39,20 @@ public class Evento {
     private Integer capacidade_max;
 
 
-    @OneToMany(mappedBy="evento")
-    private Set<EventoDataEvento> eventoDataEventos;
+    @ManyToMany
+    @JoinTable(name = "eventoOrganizador",
+            joinColumns = @JoinColumn(name = "organizador_id"),
+            inverseJoinColumns = @JoinColumn (name = "evento_id")
+    )
+    private Set<OrganizadorModel> organizadores = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "eventoDataEvento",
+                joinColumns = @JoinColumn(name = "datasEvento_id"),
+                inverseJoinColumns = @JoinColumn(name = "evento_id"))
+    private Set<DatasEventoModel> datasEvento = new HashSet<>();
+
+    @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<IngressoModel> ingressos = new HashSet<>();
+
 }

@@ -8,7 +8,7 @@ public class TicketsSystemApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(TicketsSystemApplication.class, args);
-        System.out.println("oi");
+        System.out.println("ta rodando");
     }
 
 }
