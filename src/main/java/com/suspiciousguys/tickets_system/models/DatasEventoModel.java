@@ -2,6 +2,7 @@ package com.suspiciousguys.tickets_system.models;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.suspiciousguys.tickets_system.dtos.DatasEventoDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,8 +17,8 @@ import java.util.Set;
 public class DatasEventoModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
 
     @Column(nullable = false)
     private LocalDate data;
@@ -26,5 +27,9 @@ public class DatasEventoModel {
     @ManyToMany(mappedBy = "datasEvento", fetch = FetchType.LAZY)
     private Set<EventoModel> eventos = new HashSet<>();
 
+    public DatasEventoModel(DatasEventoDTO datasEventoDTO) {
+        this.data = datasEventoDTO.getData();
+        this.id = datasEventoDTO.getId();
+    }
 
 }

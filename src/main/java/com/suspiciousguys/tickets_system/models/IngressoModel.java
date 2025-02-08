@@ -39,6 +39,7 @@ public class IngressoModel {
     private Set<ModalidadeModel> modalidades = new HashSet<>();
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+
     @OneToMany(mappedBy = "ingressoModel", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<RespostaCampoModel> respostaCampo = new HashSet<>();
 

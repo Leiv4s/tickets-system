@@ -2,6 +2,7 @@ package com.suspiciousguys.tickets_system.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -49,6 +50,7 @@ public class EventoModel {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany
+    @NotEmpty
     @JoinTable(name = "eventoDataEvento",
                 joinColumns = @JoinColumn(name = "datasEvento_id"),
                 inverseJoinColumns = @JoinColumn(name = "evento_id"))
