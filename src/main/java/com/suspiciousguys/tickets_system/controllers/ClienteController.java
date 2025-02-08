@@ -22,7 +22,7 @@ public class ClienteController {
     @PostMapping
     public ResponseEntity<ClienteModel> create(@RequestBody @Valid ClienteDTO clienteDTO) {
         ClienteModel clienteModel = new ClienteModel(clienteDTO);
-        this.clienteService.save(clienteModel);
+        this.clienteService.create(clienteModel);
         return ResponseEntity.ok().body(clienteModel);
     }
 
@@ -30,7 +30,6 @@ public class ClienteController {
     public ResponseEntity<ClienteModel> update(@RequestBody @Valid ClienteDTO clienteDTO, @PathVariable Long id) {
         ClienteModel clienteModel = new ClienteModel(clienteDTO);
         ClienteModel clienteModelUpdated = this.clienteService.findById(id);
-        System.out.println(clienteModelUpdated.getId());
         if (clienteModelUpdated == null) {
             return ResponseEntity.notFound().build();
         }

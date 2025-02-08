@@ -15,8 +15,7 @@ public class ClienteService {
         this.clienteRepository = clienteRepository;
     }
 
-    public void save(ClienteModel clienteModel) {
-        System.out.println(clienteModel.toString());
+    public void create(ClienteModel clienteModel) {
         clienteRepository.save(clienteModel);
     }
 
@@ -29,7 +28,7 @@ public class ClienteService {
     }
 
     public List<ClienteModel> findAll() {
-        return clienteRepository.findAll();
+        return this.clienteRepository.findAll();
     }
 
     public ClienteModel findById(Long id) {

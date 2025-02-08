@@ -23,4 +23,14 @@ public class ClienteDTO {
         this.senha = clienteModel.getSenha();
     }
 
+    @Override
+    public String toString() {
+        return "ClienteDTO{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", login='" + login + '\'' +
+                ", email='" + email + '\'' +
+                ", senha='" + senha + '\'' +
+                '}';
+    }
 }

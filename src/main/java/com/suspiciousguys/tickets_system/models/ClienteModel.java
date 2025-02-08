@@ -28,5 +28,4 @@ public class ClienteModel extends UsuarioModel {
         this.setEmail(clienteDTO.getEmail());
         this.setSenha(clienteDTO.getSenha());
     }
-
 }
