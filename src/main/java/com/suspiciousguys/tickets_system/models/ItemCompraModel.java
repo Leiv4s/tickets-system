@@ -1,5 +1,6 @@
 package com.suspiciousguys.tickets_system.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,10 +16,12 @@ public class ItemCompraModel {
     private Integer quantidade;
     private BigDecimal precoUnitario;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne
     @JoinColumn(name = "compra_id", nullable = false)
     private CompraModel compraModel;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne
     @JoinColumn(name = "ingresso_id",nullable = false)
     private IngressoModel ingressoModel;

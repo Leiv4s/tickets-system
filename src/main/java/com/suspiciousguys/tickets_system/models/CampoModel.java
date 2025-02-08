@@ -1,5 +1,6 @@
 package com.suspiciousguys.tickets_system.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,10 +24,12 @@ public class CampoModel {
     @Column(nullable = false, length = 255)
     private String descricaoCampo;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "modalidade_id", nullable = false)
     private ModalidadeModel modalidade;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "resposta", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<RespostaCampoModel> respostas = new HashSet<>();
 

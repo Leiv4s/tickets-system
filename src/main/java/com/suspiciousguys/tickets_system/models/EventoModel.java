@@ -1,5 +1,6 @@
 package com.suspiciousguys.tickets_system.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,7 +39,7 @@ public class EventoModel {
     @Column(nullable = false)
     private Integer capacidade_max;
 
-
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany
     @JoinTable(name = "eventoOrganizador",
             joinColumns = @JoinColumn(name = "organizador_id"),
@@ -46,12 +47,14 @@ public class EventoModel {
     )
     private Set<OrganizadorModel> organizadores = new HashSet<>();
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany
     @JoinTable(name = "eventoDataEvento",
                 joinColumns = @JoinColumn(name = "datasEvento_id"),
                 inverseJoinColumns = @JoinColumn(name = "evento_id"))
     private Set<DatasEventoModel> datasEvento = new HashSet<>();
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<IngressoModel> ingressos = new HashSet<>();
 

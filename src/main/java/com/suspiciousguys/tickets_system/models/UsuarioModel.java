@@ -3,13 +3,13 @@ package com.suspiciousguys.tickets_system.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@MappedSuperclass
 @Data
+@MappedSuperclass
 public class UsuarioModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(nullable = false, length = 255)
     private String nome;
@@ -18,7 +18,20 @@ public class UsuarioModel {
     private String login;
 
     @Column(nullable = false, length = 255)
+    private String email;
+
+    @Column(nullable = false, length = 255)
     private String senha;
 
 
+
+    @Override
+    public String toString() {
+        return "UsuarioModel{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", login='" + login + '\'' +
+                ", senha='" + senha + '\'' +
+                '}';
+    }
 }

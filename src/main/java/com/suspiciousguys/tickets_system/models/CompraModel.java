@@ -1,5 +1,6 @@
 package com.suspiciousguys.tickets_system.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
@@ -17,10 +18,12 @@ public class CompraModel {
 
     private LocalDateTime dataCompra;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private ClienteModel cliente;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "compraModel")
     private Set<ItemCompraModel> itens = new HashSet<>();
 
