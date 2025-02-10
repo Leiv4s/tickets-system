@@ -1,6 +1,8 @@
 package com.suspiciousguys.tickets_system.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.suspiciousguys.tickets_system.dtos.EventoDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -19,18 +21,16 @@ import java.util.Set;
 @Table(name = "evento")
 public class EventoModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(nullable = false, length = 255)
     private String nome;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(length = 255)
     private String descricao;
 
-    @Column(nullable = false)
-    private LocalDate data;
-
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
     @Column(nullable = false)
     private LocalTime horario;
 
@@ -38,7 +38,17 @@ public class EventoModel {
     private String local;
 
     @Column(nullable = false)
-    private Integer capacidade_max;
+    private Long capacidade_max;
+
+
+
+    public EventoModel(EventoDTO eventoDTO) {
+        this.nome = eventoDTO.getNome();
+        this.descricao = eventoDTO.getDescricao();
+        this.horario = eventoDTO.getHorario();
+        this.local = eventoDTO.getLocal();
+        this.capacidade_max = eventoDTO.getCapacidade_max();
+    }
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany
@@ -50,14 +60,27 @@ public class EventoModel {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany
-    @NotEmpty
     @JoinTable(name = "eventoDataEvento",
                 joinColumns = @JoinColumn(name = "datasEvento_id"),
                 inverseJoinColumns = @JoinColumn(name = "evento_id"))
     private Set<DatasEventoModel> datasEvento = new HashSet<>();
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<IngressoModel> ingressos = new HashSet<>();
 
+    @Override
+    public String toString() {
+        return "EventoModel{" +
+                "datasEvento=" + datasEvento +
+                ", ingressos=" + ingressos +
+                ", organizadores=" + organizadores +
+                ", capacidade_max=" + capacidade_max +
+                ", local='" + local + '\'' +
+                ", horario=" + horario +
+                ", descricao='" + descricao + '\'' +
+                ", nome='" + nome + '\'' +
+                ", id=" + id +
+                '}';
+    }
 }

@@ -17,10 +17,6 @@ import java.util.Set;
 @Table(name = "organizador")
 public class OrganizadorModel extends UsuarioModel {
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @ManyToMany(mappedBy = "organizadores", fetch = FetchType.LAZY)
-    private Set<EventoModel> eventos = new HashSet<>();
-
     public OrganizadorModel(OrganizadorDTO organizadorDTO) {
         this.setId(organizadorDTO.getId());
         this.setNome(organizadorDTO.getNome());
@@ -28,4 +24,8 @@ public class OrganizadorModel extends UsuarioModel {
         this.setEmail(organizadorDTO.getEmail());
         this.setSenha(organizadorDTO.getSenha());
     }
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ManyToMany(mappedBy = "organizadores", fetch = FetchType.LAZY)
+    private Set<EventoModel> eventos = new HashSet<>();
 }
