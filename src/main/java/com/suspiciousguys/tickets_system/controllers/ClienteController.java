@@ -21,42 +21,29 @@ public class ClienteController {
 
     @PostMapping
     public ResponseEntity<ClienteModel> create(@RequestBody @Valid ClienteDTO clienteDTO) {
-        ClienteModel clienteModel = new ClienteModel(clienteDTO);
-        this.clienteService.create(clienteModel);
-        return ResponseEntity.ok().body(clienteModel);
+        this.clienteService.create(clienteDTO);
+        return ResponseEntity.ok().header("message","Cliente criado com sucesso.").build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ClienteModel> update(@RequestBody @Valid ClienteDTO clienteDTO, @PathVariable Long id) {
-        ClienteModel clienteModel = new ClienteModel(clienteDTO);
-        ClienteModel clienteModelUpdated = this.clienteService.findById(id);
-        if (clienteModelUpdated == null) {
-            return ResponseEntity.notFound().build();
-        }
-        clienteModel.setId(clienteModelUpdated.getId());
-        System.out.println(clienteModel.getId());
-        this.clienteService.update(clienteModel);
-        return ResponseEntity.ok().body(clienteModel);
+        this.clienteService.update(clienteDTO, id);
+        return ResponseEntity.ok().header("message","Cliente atualizado com sucesso.").build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ClienteModel> deleteById(@PathVariable Long id) {
-        ClienteModel clienteModel = this.clienteService.findById(id);
-        this.clienteService.delete(clienteModel);
-        return ResponseEntity.ok().body(clienteModel);
+        this.clienteService.delete(id);
+        return ResponseEntity.ok().header("message","Cliente deletado com sucesso.").build();
     }
 
     @GetMapping
-    public List<ClienteModel> getAll() {
-        return this.clienteService.findAll();
+    public ResponseEntity<List<ClienteDTO>> getAll() {
+        return ResponseEntity.ok().body(this.clienteService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ClienteModel> getById(@PathVariable Long id) {
-        ClienteModel clienteModel = this.clienteService.findById(id);
-        if (clienteModel == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok().body(clienteModel);
+    public ResponseEntity<ClienteDTO> getById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(this.clienteService.findById(id));
     }
 }

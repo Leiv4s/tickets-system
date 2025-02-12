@@ -1,12 +1,11 @@
 package com.suspiciousguys.tickets_system.services;
 
+import com.suspiciousguys.tickets_system.dtos.OrganizadorDTO;
 import com.suspiciousguys.tickets_system.models.OrganizadorModel;
 import com.suspiciousguys.tickets_system.repositories.OrganizadorRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-import static org.apache.logging.log4j.ThreadContext.isEmpty;
 
 @Service
 public class OrganizadorService {
@@ -16,24 +15,36 @@ public class OrganizadorService {
         this.organizadorRepository = organizadorRepository;
     }
 
-    public void create(OrganizadorModel organizador) {
-        this.organizadorRepository.save(organizador);
+    public void create(OrganizadorDTO organizador) {
+        OrganizadorModel organizadorModel = new OrganizadorModel(organizador);
+        this.organizadorRepository.save(organizadorModel);
     }
 
-    public void update(OrganizadorModel organizador) {
-        this.organizadorRepository.save(organizador);
+    public void update(OrganizadorDTO organizadorDTO, Long id) {
+        OrganizadorModel oldOrganizador = organizadorRepository.findById(id).orElseThrow(() -> new RuntimeException("Organizador não encontrado!"));
+        if (oldOrganizador != null) {
+            OrganizadorModel newOrganizador = new OrganizadorModel(organizadorDTO);
+            newOrganizador.setId(id);
+            newOrganizador.setEventos(oldOrganizador.getEventos());
+            this.organizadorRepository.save(newOrganizador);
+        }
     }
 
-    public void delete(OrganizadorModel organizador) {
+    public void delete(Long id) {
+        OrganizadorModel organizador = organizadorRepository.findById(id).orElseThrow(() -> new RuntimeException("Organizador não encontrado!"));
+        if (organizador != null) {
         this.organizadorRepository.delete(organizador);
+        }
     }
 
     public OrganizadorModel findById(Long id) {
-        return this.organizadorRepository.findById(id).orElseThrow(()->new RuntimeException("organizador não encontrado."));
+        return this.organizadorRepository.findById(id).orElseThrow(() -> new RuntimeException("organizador não encontrado."));
     }
 
-    public List<OrganizadorModel> findAll() {return this.organizadorRepository.findAll();}
-
+    public List<OrganizadorDTO> findAll() {
+        List<OrganizadorModel> organizadores = this.organizadorRepository.findAll();
+        return organizadores.stream().map(OrganizadorDTO::new).toList();
+    }
 
 
 }

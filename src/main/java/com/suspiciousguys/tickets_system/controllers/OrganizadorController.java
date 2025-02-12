@@ -21,44 +21,32 @@ public class OrganizadorController {
 
     @PostMapping
     public ResponseEntity<OrganizadorModel> create(@RequestBody @Valid OrganizadorDTO organizadorDTO) {
-        OrganizadorModel organizador = new OrganizadorModel(organizadorDTO);
-        this.organizadorService.create(organizador);
-        return ResponseEntity.ok().body(organizador);
+        this.organizadorService.create(organizadorDTO);
+        return ResponseEntity.ok().header("message", "Organizador criado com sucesso.").build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<OrganizadorModel> update (@PathVariable Long id, @RequestBody @Valid OrganizadorDTO organizadorDTO) {
-        OrganizadorModel organizadorNow = organizadorService.findById(id);
-        if (organizadorNow == null) {
-            return ResponseEntity.notFound().build();
-        }
-        OrganizadorModel organizador = new OrganizadorModel(organizadorDTO);
-        organizador.setId(id);
-        this.organizadorService.update(organizador);
-        return ResponseEntity.ok().body(organizador);
+    public ResponseEntity<OrganizadorModel> update(@PathVariable Long id, @RequestBody @Valid OrganizadorDTO organizadorDTO) {
+        this.organizadorService.update(organizadorDTO, id);
+        return ResponseEntity.ok().header("message", "Organizador criado com sucesso.").build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<OrganizadorModel> delete (@PathVariable Long id) {
-        OrganizadorModel organizador = organizadorService.findById(id);
-        if (organizador == null) {
-            return ResponseEntity.notFound().build();
-        }
-        this.organizadorService.delete(organizador);
-        return ResponseEntity.ok().body(organizador);
+    public ResponseEntity<OrganizadorModel> delete(@PathVariable Long id) {
+        this.organizadorService.delete(id);
+        return ResponseEntity.ok().header("message", "Organizador deletado com sucesso.").build();
     }
 
     @GetMapping
-    public List<OrganizadorModel> findAll(){
-        return this.organizadorService.findAll();
+    public ResponseEntity<List<OrganizadorDTO>> findAll() {
+        return ResponseEntity.ok().body(this.organizadorService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrganizadorModel> findById(@PathVariable Long id){
+    public ResponseEntity<OrganizadorModel> findById(@PathVariable Long id) {
         OrganizadorModel organizador = organizadorService.findById(id);
         return ResponseEntity.ok().body(organizador);
     }
-
 
 
 }

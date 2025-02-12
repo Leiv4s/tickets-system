@@ -18,14 +18,18 @@ import java.util.Set;
 @Table(name = "cliente")
 public class ClienteModel extends UsuarioModel {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "clienteId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<CompraModel> compras = new HashSet<>();
 
-    public ClienteModel(ClienteDTO clienteDTO){
+
+    public ClienteModel(ClienteDTO clienteDTO) {
         this.setId(clienteDTO.getId());
         this.setNome(clienteDTO.getNome());
         this.setLogin(clienteDTO.getLogin());
         this.setEmail(clienteDTO.getEmail());
         this.setSenha(clienteDTO.getSenha());
+        this.compras = (compras!=null)  ? compras: new HashSet<>();
     }
+
+
 }

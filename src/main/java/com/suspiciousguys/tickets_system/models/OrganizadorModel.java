@@ -27,5 +27,6 @@ public class OrganizadorModel extends UsuarioModel {
         this.setLogin(organizadorDTO.getLogin());
         this.setEmail(organizadorDTO.getEmail());
         this.setSenha(organizadorDTO.getSenha());
+        this.eventos = (eventos != null) ? eventos : new HashSet<>();
     }
 }
