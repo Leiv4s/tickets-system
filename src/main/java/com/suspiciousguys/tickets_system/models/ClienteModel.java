@@ -18,7 +18,7 @@ import java.util.Set;
 @Table(name = "cliente")
 public class ClienteModel extends UsuarioModel {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "clienteId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<CompraModel> compras = new HashSet<>();
 
 
