@@ -102,16 +102,18 @@ CREATE TABLE resposta_campo (
 );
 
 -- Adicionando chaves estrangeiras
-ALTER TABLE campo ADD CONSTRAINT FKa8n54q096cq9sdw649lx6ssxl FOREIGN KEY (modalidade_id) REFERENCES modalidade;
-ALTER TABLE compra ADD CONSTRAINT FKni21w35sfgo033m8l93ki11ab FOREIGN KEY (cliente_id) REFERENCES cliente;
-ALTER TABLE evento_data_evento ADD CONSTRAINT FK3v30g1hv19v22g7xkffs2k2l5 FOREIGN KEY (evento_id) REFERENCES datas_evento;
-ALTER TABLE evento_data_evento ADD CONSTRAINT FKj11skd4g3e2nowl47vq69q4eh FOREIGN KEY (datas_evento_id) REFERENCES evento;
-ALTER TABLE evento_organizador ADD CONSTRAINT FKf60bdbd74s1udgkx3unkbj3m4 FOREIGN KEY (evento_id) REFERENCES organizador;
-ALTER TABLE evento_organizador ADD CONSTRAINT FK87o29k7d0bu94l4sl9n4ykujs FOREIGN KEY (organizador_id) REFERENCES evento;
-ALTER TABLE ingressos ADD CONSTRAINT FKtgph8tw2ri5ot8fbqnrlwgsj5 FOREIGN KEY (cliente) REFERENCES cliente;
-ALTER TABLE ingressos ADD CONSTRAINT FKl3c95uac4ffto02mxxxuclklw FOREIGN KEY (evento_id) REFERENCES evento;
-ALTER TABLE item_compra ADD CONSTRAINT FKovscx99wpxanu7sytiqarv700 FOREIGN KEY (compra_id) REFERENCES compra;
-ALTER TABLE item_compra ADD CONSTRAINT FKnytn0btpacuteooecelitrco1 FOREIGN KEY (ingresso_id) REFERENCES ingressos;
-ALTER TABLE modalidade ADD CONSTRAINT FKspyefcq1yj12uuodi2wfpu5yt FOREIGN KEY (ingresso_id) REFERENCES ingressos;
-ALTER TABLE resposta_campo ADD CONSTRAINT FKroea5eyc039mvnt82gwtmn7b3 FOREIGN KEY (campo_model_id) REFERENCES campo;
-ALTER TABLE resposta_campo ADD CONSTRAINT FK60ecfcrm7rr6r82y44kf273f0 FOREIGN KEY (ingresso_model_id) REFERENCES ingressos;
+
+ALTER TABLE campo ADD CONSTRAINT fk_campo_modalidade FOREIGN KEY (modalidade_id) REFERENCES modalidade;
+ALTER TABLE compra ADD CONSTRAINT fk_compra_cliente FOREIGN KEY (cliente_id) REFERENCES cliente;
+ALTER TABLE evento_data_evento ADD CONSTRAINT fk_evento_data_evento FOREIGN KEY (evento_id) REFERENCES datas_evento;
+ALTER TABLE evento_data_evento ADD CONSTRAINT fk_data_evento_evento FOREIGN KEY (datas_evento_id) REFERENCES evento;
+ALTER TABLE evento_organizador ADD CONSTRAINT fk_evento_organizador FOREIGN KEY (evento_id) REFERENCES organizador;
+ALTER TABLE evento_organizador ADD CONSTRAINT fk_organizador_evento FOREIGN KEY (organizador_id) REFERENCES evento;
+ALTER TABLE ingressos ADD CONSTRAINT fk_ingressos_cliente FOREIGN KEY (cliente) REFERENCES cliente;
+ALTER TABLE ingressos ADD CONSTRAINT fk_ingressos_evento FOREIGN KEY (evento_id) REFERENCES evento;
+ALTER TABLE item_compra ADD CONSTRAINT fk_item_compra_compra FOREIGN KEY (compra_id) REFERENCES compra;
+ALTER TABLE item_compra ADD CONSTRAINT fk_item_compra_ingresso FOREIGN KEY (ingresso_id) REFERENCES ingressos;
+ALTER TABLE modalidade ADD CONSTRAINT fk_modalidade_ingresso FOREIGN KEY (ingresso_id) REFERENCES ingressos;
+ALTER TABLE resposta_campo ADD CONSTRAINT fk_resposta_campo FOREIGN KEY (campo_model_id) REFERENCES campo;
+ALTER TABLE resposta_campo ADD CONSTRAINT fk_resposta_ingresso FOREIGN KEY (ingresso_model_id) REFERENCES ingressos;
+
