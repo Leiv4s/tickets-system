@@ -6,6 +6,8 @@ import com.suspiciousguys.tickets_system.dtos.DatasEventoDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
+
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,12 +26,11 @@ public class DatasEventoModel {
     private LocalDate data;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @ManyToMany(mappedBy = "datasEvento", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "datasEvento", fetch = FetchType.EAGER)
     private Set<EventoModel> eventos = new HashSet<>();
 
     public DatasEventoModel(DatasEventoDTO datasEventoDTO) {
-        this.data = datasEventoDTO.getData();
-        this.id = datasEventoDTO.getId();
+        BeanUtils.copyProperties(datasEventoDTO, this);
     }
 
 }

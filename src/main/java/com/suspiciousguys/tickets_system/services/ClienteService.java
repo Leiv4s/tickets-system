@@ -2,15 +2,11 @@ package com.suspiciousguys.tickets_system.services;
 
 import com.suspiciousguys.tickets_system.dtos.ClienteDTO;
 import com.suspiciousguys.tickets_system.models.ClienteModel;
-import com.suspiciousguys.tickets_system.models.CompraModel;
 import com.suspiciousguys.tickets_system.repositories.ClienteRepository;
-import com.suspiciousguys.tickets_system.repositories.CompraRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class ClienteService {
